@@ -93,6 +93,7 @@ const Login = () => {
                 value={formData.name}
                 onChange={inputHandler}
                 required
+                autoFocus
                 placeholder="Name"
                 className="w-full outline-none border-none px-2 bg-transparent text-white placeholder:text-white/60"
               />
@@ -108,6 +109,7 @@ const Login = () => {
               value={formData.email}
               onChange={inputHandler}
               required
+              autoFocus
               placeholder="Email"
               className="w-full outline-none border-none px-2 bg-transparent text-white placeholder:text-white/60"
             />
