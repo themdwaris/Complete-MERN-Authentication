@@ -8,6 +8,7 @@ import Loader from "../components/Loader";
 import { useYourContext } from "../context/AppContext";
 
 const Login = () => {
+  axios.defaults.withCredentials=true
   const [formData, setFormData] = useState({
     name: "",
     email: "",
