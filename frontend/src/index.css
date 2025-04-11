@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    box-sizing: border-box;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+body{
+    font-family: "Lexend",Arial, Helvetica, sans-serif;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+}
+
+/* Hide scrollbar but allow scrolling */
+.element {
+  overflow: auto;
+  scrollbar-width: none; /* For Firefox */
+}
+
+.element::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Edge */
+}
