@@ -63,9 +63,7 @@ const VerifyEmail = () => {
       }
     });
     
-    if(inputRef.current[pasteArray.length-1]){
-      inputRef.current[pasteArray.length-1].focus()
-    }
+    
   };
 
   const sendVerificationOTP = async()=>{
