@@ -1,6 +1,6 @@
 import axios from "axios";
-import { createContext, useContext, useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const AppContext = createContext();
@@ -11,18 +11,26 @@ const AppContextProvider = ({ children }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({});
-  const [loggedIn, setIsLoggedIn] = useState(false);
+
+  
   const [loginState, setLoginState] = useState("login");
   const backendURL = import.meta.env.VITE_APP_BACKEND_URL;
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
 
-
+  useEffect(()=>{
+    const logged = JSON.parse(localStorage.getItem("isLogged"))
+    if(logged!==null){
+      setIsLoggedIn(logged===true)
+    }
+  },[])
 
   const isAuthState = async () => {
     try {
       const res = await axios.get(`${backendURL}/api/auth/is-authenticated`);
       if (res?.data?.success) {
-        setIsLoggedIn(true);
         getUserData();
+        setIsLoggedIn(true);
+        localStorage.setItem("isLogged", true);
       }
     } catch (error) {
       toast.error(error?.message);
@@ -43,7 +51,6 @@ const AppContextProvider = ({ children }) => {
     }
   };
 
-
   useEffect(() => {
     isAuthState();
   }, []);
@@ -58,13 +65,12 @@ const AppContextProvider = ({ children }) => {
         setLoading,
         user,
         setUser,
-        loggedIn,
+        isLoggedIn,
         setIsLoggedIn,
         getUserData,
         isAuthState,
         loginState,
         setLoginState,
-        
       }}
     >
       {children}

@@ -8,7 +8,7 @@ const Header = () => {
   const { user, navigate } = useYourContext();
 
   return (
-    <div className="h-[85vh] md:h-[70vh] w-full flex items-center justify-center">
+    <div className="h-[70vh] w-full flex items-center justify-center">
       <div className="w-full max-w-2xl mx-auto flex flex-col gap-3 justify-center items-center">
         <img
           src={`${user?.name ? avatar : "./bannerlogo.png"}`}

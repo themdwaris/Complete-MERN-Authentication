@@ -23,7 +23,7 @@ export const getAllTodo = async (req, res) => {
     const { userId } = req.body;
     const todos = await todoModel.find({ userId: userId });
     if (todos.length === 0)
-      return res.json({ message: "Todo is empty", success: false });
+      return res.json({ todos:[] , success: false });
     return res.json({ todos: todos || [], success: true });
   } catch (error) {
     return res.json({ message: error?.message || error, success: false });

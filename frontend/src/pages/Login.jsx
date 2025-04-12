@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { FaUserAlt } from "react-icons/fa";
@@ -8,14 +8,23 @@ import Loader from "../components/Loader";
 import { useYourContext } from "../context/AppContext";
 
 const Login = () => {
-  axios.defaults.withCredentials=true
+  axios.defaults.withCredentials = true;
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
   });
-  
-  const { loading, setLoading, backendURL, navigate,getUserData,setIsLoggedIn,loginState, setLoginState } = useYourContext();
+
+  const {
+    loading,
+    setLoading,
+    backendURL,
+    navigate,
+    getUserData,
+    setIsLoggedIn,
+    loginState,
+    setLoginState,
+  } = useYourContext();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -31,26 +40,26 @@ const Login = () => {
         if (res?.data?.success) {
           toast.success("Sign Up Successfull");
           // setLoginState("login");
-          navigate("/email-verify")
+          navigate("/email-verify");
           setLoading(false);
           setFormData({
             name: "",
             email: "",
             password: "",
-          })
+          });
         } else {
           toast.error(res?.data?.message);
           setLoading(false);
         }
-
       } else {
         setLoading(true);
         axios.defaults.withCredentials = true;
         const res = await axios.post(`${backendURL}/api/auth/login`, formData);
         if (res?.data?.success) {
           toast.success("Login Successfull");
-          getUserData()
-          setIsLoggedIn(true)
+          getUserData();
+          setIsLoggedIn(true);
+          localStorage.setItem("isLogged", true);
           navigate("/");
           setLoading(false);
         } else {
@@ -68,6 +77,13 @@ const Login = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
+  useEffect(() => {
+    const logged = JSON.parse(localStorage.getItem("isLogged"))
+    if (logged) {
+      navigate("/");
+    }
+  }, []);
   return (
     <div className="h-screen bg-gradient-to-r from-purple-600 to-indigo-400 flex items-center justify-center px-5">
       <form
@@ -130,7 +146,10 @@ const Login = () => {
             />
           </div>
           {loginState === "login" && (
-            <p className="text-sm cursor-pointer bg-gradient-to-l from-purple-600 to-indigo-400 inline-block text-transparent bg-clip-text" onClick={()=>navigate("/reset-password")}>
+            <p
+              className="text-sm cursor-pointer bg-gradient-to-l from-purple-600 to-indigo-400 inline-block text-transparent bg-clip-text"
+              onClick={() => navigate("/reset-password")}
+            >
               Forget password
             </p>
           )}

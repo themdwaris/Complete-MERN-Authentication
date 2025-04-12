@@ -17,6 +17,7 @@ const Navbar = () => {
       if (res?.data?.success) {
         setUser({});
         setIsLoggedIn(false);
+        localStorage.setItem("isLogged",false)
         navigate("/");
       } else {
         toast.error(res?.data?.message);
